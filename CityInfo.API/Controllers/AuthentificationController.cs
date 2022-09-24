@@ -64,7 +64,7 @@ namespace CityInfo.API.Controllers
         private CityUserInfo ValidateCredentials(string? userName, string? password)
         {
             //Emulate credentials check
-            return new CityUserInfo(5, "Alexey", "Konovalenko", "Odessa");
+            return new CityUserInfo(5, "Alexey", "Konovalenko", "Tiraspol");
         }
 
         public class CityUserInfo
@@ -82,6 +82,5 @@ namespace CityInfo.API.Controllers
                 City = city;
             }
         }
-
     }
 }

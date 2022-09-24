@@ -42,7 +42,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 //Add token validation
 builder.Services.AddAuthentication("Bearer").AddJwtBearer(options =>
 {
-    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+    options.TokenValidationParameters = new TokenValidationParameters()
     {
         ValidateIssuer = true,
         ValidateIssuerSigningKey = true,
@@ -51,6 +51,15 @@ builder.Services.AddAuthentication("Bearer").AddJwtBearer(options =>
         ValidAudience = builder.Configuration["Authentication:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(builder.Configuration["Authentication:SecretForKey"]))
     };
+});
+
+builder.Services.AddAuthorization(config =>
+{
+    config.AddPolicy("CityPolicy", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireClaim("city", "Odessa");
+    });
 });
 
 var app = builder.Build();
